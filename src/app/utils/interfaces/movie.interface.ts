@@ -1,11 +1,11 @@
-export interface MoviesResp {
+export interface MediaResp {
   page: number;
-  results: Movie[];
+  results: Media[];
   total_pages: number;
   total_results: number;
 }
 
-export interface Movie {
+export interface Media {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -15,9 +15,16 @@ export interface Movie {
   overview: string;
   popularity: number;
   poster_path: string;
-  release_date: string;
-  title: string;
+  release_date?: string;
+  first_air_date?: string;
+  title?: string;
+  name?: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }

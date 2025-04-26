@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Icons} from '../../../utils/enums/icons.enum';
-import {Movie} from '../../../utils/interfaces/movie.interface';
+import {Icons} from '../../../../utils/enums/icons.enum';
+import {Media} from '../../../../utils/interfaces/movie.interface';
 
 @Component({
   selector: 'app-media-show-list-item',
@@ -10,7 +10,7 @@ import {Movie} from '../../../utils/interfaces/movie.interface';
   styleUrl: './media-show-list-item.component.scss'
 })
 export class MediaShowListItemComponent {
-  @Input() public movie?: Movie;
+  @Input() public movie?: Media;
 
   public readonly watchlistPlusIcon = Icons.WatchlistMarkerPlus;
 

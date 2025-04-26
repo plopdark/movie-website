@@ -1,3 +1,5 @@
 export enum RoutingEnum {
-  user = 'user',
+  User = 'user',
+  Movies = 'movies',
+  TvSeries = 'tvSeries',
 }

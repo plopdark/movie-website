@@ -1,0 +1,7 @@
+<app-header></app-header>
+<div class="main">
+  <p class="main__title">Top Rated {{category}}</p>
+  @if(medias){
+    <app-media-column-list [medias]="medias"></app-media-column-list>
+  }
+</div>

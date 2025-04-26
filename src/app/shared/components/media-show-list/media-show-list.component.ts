@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Movie} from '../../../utils/interfaces/movie.interface';
-import {MediaShowListItemComponent} from '../media-show-list-item/media-show-list-item.component';
+import {Media} from '../../../utils/interfaces/movie.interface';
+import {MediaShowListItemComponent} from './media-show-list-item/media-show-list-item.component';
 import {Icons} from '../../../utils/enums/icons.enum';
 
 @Component({
@@ -13,11 +13,11 @@ import {Icons} from '../../../utils/enums/icons.enum';
   styleUrl: './media-show-list.component.scss'
 })
 export class MediaShowListComponent implements OnChanges{
-  @Input() public movies: Movie[] = [];
+  @Input() public movies: Media[] = [];
 
   @Input() public title: string = '';
 
-  public visibleMovies: Movie[] = [];
+  public visibleMovies: Media[] = [];
 
   public startIndex = 0;
 

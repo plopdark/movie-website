@@ -1,0 +1,11 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 200px;
+
+  &__title {
+    margin-right: auto;
+    font-size: 22px;
+  }
+}

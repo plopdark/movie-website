@@ -22,7 +22,19 @@ export class HeaderComponent {
   public readonly userIcon = Icons.UserIcon;
   public readonly magnifier = Icons.MagnifierIcon
 
+  public navigateToHomePage(): void {
+    this.router.navigate([''])
+  }
+
   public navigateToAccountPage(): void {
-    this.router.navigate([RoutingEnum.user])
+    this.router.navigate([RoutingEnum.User])
+  }
+
+  public navigateToMoviesPage(): void {
+    this.router.navigate([RoutingEnum.Movies])
+  }
+
+  public navigateToTvSeriesPage(): void {
+    this.router.navigate([RoutingEnum.TvSeries])
   }
 }
