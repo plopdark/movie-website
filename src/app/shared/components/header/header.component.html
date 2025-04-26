@@ -1,0 +1,23 @@
+<div class="header">
+  <img [src]="logo" alt="logo" class="header__image"/>
+  <div class="header__items">
+    <div class="header__item">Movies</div>
+    <div class="header__item">TV Shows</div>
+    <div class="header__item">Celebs</div>
+    <div class="header__item">Watch</div>
+    <div class="header__item">Awards</div>
+    <div class="header__item">Community</div>
+  </div>
+  <div class="header__input">
+    <input placeholder="Search" class="header__input-inpt" />
+    <img [src]="magnifier" alt="Search" class="header__input-image">
+  </div>
+  <div class="header__multiple">
+    <img [src]="watchlist" alt="Watchlist" class="header__multiple-image">
+    <p class="header__multiple-text">Watchlist</p>
+  </div>
+  <div class="header__multiple" (click)="navigateToAccountPage()">
+    <img [src]="userIcon" alt="user" class="header__multiple-image">
+    <p class="header__multiple-text">User</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.media{
+  &__top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: #797979;
+    font-size: 22px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__list{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}

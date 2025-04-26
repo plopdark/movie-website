@@ -1,0 +1,15 @@
+<div class="movie__item">
+  <div class="movie__item-watchlist">
+    <img [src]="watchlistPlusIcon" alt="Watchlist">
+  </div>
+  <div class="movie__item-image">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + movie?.poster_path" alt="Poster" class="movie__item-img">
+  </div>
+  <p class="movie__item-title">{{movie?.title}}</p>
+  <div class="movie__item-rate">
+    <div class="movie__item-rate--image">
+      <img [src]="goldStarIcon" alt="Gold star" class="movie__item-rate">
+    </div>
+    <div class="movie__item-rate--text">{{movie?.vote_average!.toString().slice(0,3)}}</div>
+  </div>
+</div>

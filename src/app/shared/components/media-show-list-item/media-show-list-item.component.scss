@@ -1,0 +1,50 @@
+.movie {
+  &__item {
+    position: relative;
+    background-color: #151515;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    padding: 12px;
+    color: #797979;
+    font-weight: 400;
+    width: 258px;
+    cursor: pointer;
+
+    &-watchlist {
+      position: absolute;
+      left: 20px;
+      cursor: pointer;
+    }
+
+    &-image {
+    }
+
+    &-img {
+      width: 234px;
+      border-radius: 5px;
+    }
+
+    &-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 18px;
+    }
+
+    &-rate {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: end;
+      font-size: 16px;
+
+      &--image {
+      }
+
+      &--text {
+      }
+    }
+  }
+}

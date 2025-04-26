@@ -1,0 +1,18 @@
+<div class="media">
+  <div class="media__top">
+    <div class="media__title">{{title}}</div>
+    <div class="media__buttons">
+      <button (click)="showLess()" [disabled]="!canMoveBack()" class="media__button">
+        <img [src]="listButtonLeft" alt="Button"/>
+      </button>
+      <button (click)="loadMore()" [disabled]="!canMoveForward()" class="media__button">
+        <img [src]="listButtonRight" alt="Button"/>
+      </button>
+    </div>
+  </div>
+  <div class="media__list">
+    @for (movie of visibleMovies; track movie)  {
+      <app-media-show-list-item [movie]="movie"></app-media-show-list-item>
+    }
+  </div>
+</div>
