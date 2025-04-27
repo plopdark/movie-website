@@ -29,12 +29,12 @@ export class MediaPageComponent implements OnInit {
     const path = this.route.snapshot.routeConfig?.path!;
     if(path===RoutingEnum.Movies){
       this.category = 'Movies'
-      this.dataService.getHundredTopRatedMovies().subscribe(el=>{
+      this.dataService.getHundredTopRatedMedia('movie').subscribe(el=>{
         this.medias=el.results
       })
     } else if(path===RoutingEnum.TvSeries){
       this.category = 'Tv Series'
-      this.dataService.getHundredTopRatedTvSeries().subscribe(el=>{
+      this.dataService.getHundredTopRatedMedia('tv').subscribe(el=>{
         this.medias=el.results
       })
     }

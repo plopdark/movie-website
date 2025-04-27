@@ -17,7 +17,7 @@ export class MediaShowListComponent implements OnChanges{
 
   @Input() public title: string = '';
 
-  public visibleMovies: Media[] = [];
+  public visibleMedia: Media[] = [];
 
   public startIndex = 0;
 
@@ -34,7 +34,7 @@ export class MediaShowListComponent implements OnChanges{
   }
 
   public updateVisibleMovies() {
-    this.visibleMovies = this.movies.slice(this.startIndex, this.startIndex + this.itemsToShow);
+    this.visibleMedia = this.movies.slice(this.startIndex, this.startIndex + this.itemsToShow);
   }
 
   public loadMore() {

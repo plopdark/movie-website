@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="media__list">
-    @for (movie of visibleMovies; track movie)  {
-      <app-media-show-list-item [movie]="movie"></app-media-show-list-item>
+    @for (media of visibleMedia; track media)  {
+      <app-media-show-list-item [media]="media"></app-media-show-list-item>
     }
   </div>
 </div>

@@ -27,13 +27,14 @@
 
     &-img {
       width: 130px;
+      height: 200px;
     }
   }
 
   &__info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 15px;
     width: 100%;
   }
 

@@ -27,7 +27,7 @@ export class MediaColumnListItemComponent implements OnChanges{
 
   public readonly goldStarIcon = Icons.GoldStarIcon;
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     if (changes['media'] && this.media) {
       if(this.media?.release_date!) {
         this.releaseDate = this.media.release_date.slice(0, 4)

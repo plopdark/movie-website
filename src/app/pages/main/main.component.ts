@@ -16,8 +16,10 @@ export class MainComponent implements OnInit{
 
   public movies: Media[] = []
 
+  public tvSeries: Media[] = []
+
   public ngOnInit() {
-    this.dataService.getTopRatedMoviesChanges().subscribe(el => this.movies = el.results);
-    this.dataService.getAllGenres().subscribe(el=>console.log(el))
+    this.dataService.getTopRatedMediaChanges('movie').subscribe(el => this.movies = el.results);
+    this.dataService.getTopRatedMediaChanges('tv').subscribe(el => this.tvSeries = el.results);
   }
 }
