@@ -8,4 +8,7 @@ export enum Icons {
   EmptyStarIcon = '././icons/empty-star-icon.svg',
   ListButtonRight = '././icons/list-button-right.svg',
   ListButtonLeft = '././icons/list-button-left.svg',
+  BookmarkYellow = '././icons/bookmark-yellow.svg',
+  OpenedEye = '././icons/opened-eye.svg',
+  ClosedEye = '././icons/closed-eye.svg',
 }

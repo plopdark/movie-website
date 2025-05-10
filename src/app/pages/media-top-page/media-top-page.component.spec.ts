@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MediaPageComponent } from './media-page.component';
+import { MediaTopPageComponent } from './media-top-page.component';
 
 describe('MegiaPageComponent', () => {
-  let component: MediaPageComponent;
-  let fixture: ComponentFixture<MediaPageComponent>;
+  let component: MediaTopPageComponent;
+  let fixture: ComponentFixture<MediaTopPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MediaPageComponent]
-    })
-    .compileComponents();
+      imports: [MediaTopPageComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(MediaPageComponent);
+    fixture = TestBed.createComponent(MediaTopPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

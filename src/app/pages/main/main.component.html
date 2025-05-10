@@ -1,7 +1,17 @@
 <app-header></app-header>
 <main class="main">
-  <app-media-show-list [movies]="movies" [title]="'Top Rated Movies'"></app-media-show-list>
-  <app-media-show-list [movies]="tvSeries" [title]="'Top Rated Tv Series'"></app-media-show-list>
+  <app-media-show-list
+    [media]="movies"
+    [title]="'Top Rated Movies'"
+    [watchListIds]="watchListIds"
+    [accountId]="accountId"
+    (toggle)="onChildToggle()"
+  ></app-media-show-list>
+  <app-media-show-list
+    [media]="tvSeries"
+    [title]="'Top Rated TV Series'"
+    [watchListIds]="watchListIds"
+    [accountId]="accountId"
+    (toggle)="onChildToggle()"
+  ></app-media-show-list>
 </main>
-
-

@@ -1,32 +1,39 @@
 <div class="media">
   <div class="media__image">
     <div class="media__item-watchlist">
-      <img [src]="watchlistPlusIcon" alt="Watchlist">
+      <img [src]="bookMarkIcon" alt="Watchlist" />
     </div>
-    <div class="media__item-image">
-      <img [src]="'https://image.tmdb.org/t/p/w500' + media?.poster_path" alt="Poster" class="media__item-img">
+    <div class="media__item-image" (click)="onMediaClick(media!)">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + media?.poster_path"
+        alt="Poster"
+        class="media__item-img"
+      />
     </div>
   </div>
   <div class="media__info">
     <div class="media__top">
-      <div class="media__title">{{title}}</div>
+      <div class="media__title" (click)="onMediaClick(media!)">{{ title }}</div>
       <div class="media__rate">
-        <img [src]="goldStarIcon" alt="Gold star" class="media__rate-image">
-        <p class="media__rate-rate">{{ media?.vote_average?.toString()?.slice(0, 3) }}</p>
-        <span>({{media?.vote_count}})</span>
+        <img [src]="goldStarIcon" alt="Gold star" class="media__rate-image" />
+        <p class="media__rate-rate">
+          {{ media?.vote_average?.toString()?.slice(0, 3) }}
+        </p>
+        <span>({{ media?.vote_count }})</span>
       </div>
     </div>
     <div class="media__center">
-      <p class="media__center-item">{{releaseDate}}</p> -
-      <p class="media__center-item">{{adultValue}}</p>
+      <p class="media__center-item">{{ releaseDate }}</p>
+      -
+      <p class="media__center-item">{{ contentRating }}</p>
     </div>
     <div class="media__genres">
-      @for(genre of genreList; track genre){
-        <div class="media__genre">{{genre}}</div>
+      @for (genre of genreList; track genre) {
+        <div class="media__genre">{{ genre }}</div>
       }
     </div>
     <div class="media__bottom">
-      <p class="media__bottom-item">{{media?.overview}}</p>
+      <p class="media__bottom-item">{{ media?.overview }}</p>
     </div>
   </div>
 </div>

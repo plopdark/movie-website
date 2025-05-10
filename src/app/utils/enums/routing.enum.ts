@@ -2,5 +2,6 @@ export enum RoutingEnum {
   User = 'user',
   Movies = 'movies',
   TvSeries = 'tvSeries',
-  Auth = 'auth'
+  Auth = 'auth',
+  MediaShow = 'mediaShow',
 }

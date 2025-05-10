@@ -1,15 +1,23 @@
 <div class="movie__item">
-  <div class="movie__item-watchlist">
-    <img [src]="watchlistPlusIcon" alt="Watchlist">
+  <div class="movie__item-watchlist" (click)="toggleWatchList()">
+    <img [src]="bookMarkIcon" alt="Watchlist" />
   </div>
-  <div class="movie__item-image">
-    <img [src]="'https://image.tmdb.org/t/p/w500' + media?.poster_path" alt="Poster" class="movie__item-img">
+  <div class="movie__item-image" (click)="onMediaClick(media)">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500' + media?.poster_path"
+      alt="Poster"
+      class="movie__item-img"
+    />
   </div>
-  <p class="movie__item-title">{{mediaTitle}}</p>
+  <p class="movie__item-title" (click)="onMediaClick(media)">
+    {{ mediaTitle }}
+  </p>
   <div class="movie__item-rate">
     <div class="movie__item-rate--image">
-      <img [src]="goldStarIcon" alt="Gold star" class="movie__item-rate">
+      <img [src]="goldStarIcon" alt="Gold star" class="movie__item-rate" />
     </div>
-    <div class="movie__item-rate--text">{{media?.vote_average!.toString().slice(0,3)}}</div>
+    <div class="movie__item-rate--text">
+      {{ media?.vote_average!.toString().slice(0, 3) }}
+    </div>
   </div>
 </div>

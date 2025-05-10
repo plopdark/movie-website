@@ -8,9 +8,8 @@ describe('MoviesShowListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MediaShowListItemComponent]
-    })
-    .compileComponents();
+      imports: [MediaShowListItemComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MediaShowListItemComponent);
     component = fixture.componentInstance;

@@ -1,21 +1,32 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {Media} from '../../../utils/interfaces/movie.interface';
-import {MediaShowListItemComponent} from './media-show-list-item/media-show-list-item.component';
-import {Icons} from '../../../utils/enums/icons.enum';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
+import { Media } from '../../../utils/interfaces/movie.interface';
+import { MediaShowListItemComponent } from './media-show-list-item/media-show-list-item.component';
+import { Icons } from '../../../utils/enums/icons.enum';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-media-show-list',
   standalone: true,
-  imports: [
-    MediaShowListItemComponent,
-  ],
+  imports: [MediaShowListItemComponent, NgForOf],
   templateUrl: './media-show-list.component.html',
-  styleUrl: './media-show-list.component.scss'
+  styleUrl: './media-show-list.component.scss',
 })
-export class MediaShowListComponent implements OnChanges{
-  @Input() public movies: Media[] = [];
+export class MediaShowListComponent implements OnChanges {
+  @Input() media!: Media[];
+
+  @Input() watchListIds = new Set<number>();
+
+  @Input() accountId = 0;
 
   @Input() public title: string = '';
+
+  @Output() toggle = new EventEmitter<void>();
 
   public visibleMedia: Media[] = [];
 
@@ -34,11 +45,14 @@ export class MediaShowListComponent implements OnChanges{
   }
 
   public updateVisibleMovies() {
-    this.visibleMedia = this.movies.slice(this.startIndex, this.startIndex + this.itemsToShow);
+    this.visibleMedia = this.media.slice(
+      this.startIndex,
+      this.startIndex + this.itemsToShow,
+    );
   }
 
   public loadMore() {
-    if (this.startIndex + this.itemsToShow < this.movies.length) {
+    if (this.startIndex + this.itemsToShow < this.media.length) {
       this.startIndex += this.moveBy;
       this.updateVisibleMovies();
     }
@@ -54,12 +68,11 @@ export class MediaShowListComponent implements OnChanges{
     }
   }
 
-
   public canMoveBack(): boolean {
     return this.startIndex >= this.moveBy;
   }
 
   public canMoveForward(): boolean {
-    return (this.startIndex + this.itemsToShow) < this.movies.length;
+    return this.startIndex + this.itemsToShow < this.media.length;
   }
 }

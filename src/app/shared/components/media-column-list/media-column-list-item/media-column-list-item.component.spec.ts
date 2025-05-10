@@ -8,9 +8,8 @@ describe('MediaColumnListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MediaColumnListItemComponent]
-    })
-    .compileComponents();
+      imports: [MediaColumnListItemComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MediaColumnListItemComponent);
     component = fixture.componentInstance;

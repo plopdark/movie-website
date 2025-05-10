@@ -1,23 +1,35 @@
 <div class="header">
-  <img [src]="logo" alt="logo" class="header__image" (click)="navigateToHomePage()"/>
+  <img
+    [src]="logo"
+    alt="logo"
+    class="header__image"
+    (click)="navigateToHomePage()"
+  />
   <div class="header__items">
     <div class="header__item" (click)="navigateToMoviesPage()">Movies</div>
     <div class="header__item" (click)="navigateToTvSeriesPage()">TV Shows</div>
     <div class="header__item">Celebs</div>
-    <div class="header__item">Watch</div>
-    <div class="header__item">Awards</div>
-    <div class="header__item">Community</div>
   </div>
   <div class="header__input">
-    <input placeholder="Search" class="header__input-inpt" />
-    <img [src]="magnifier" alt="Search" class="header__input-image">
+    <input
+      placeholder="Search"
+      class="header__input-inpt"
+      [value]="searchQuery"
+      (input)="onSearchInput($event)"
+    />
+    <img [src]="magnifier" alt="Search" class="header__input-image" />
   </div>
+  <ul *ngIf="searchResults.length" class="header__search-dropdown">
+    <li *ngFor="let item of searchResults" (click)="onClickMedia(item)">
+      {{ item.name || item.title }}
+    </li>
+  </ul>
   <div class="header__multiple">
-    <img [src]="watchlist" alt="Watchlist" class="header__multiple-image">
+    <img [src]="watchlist" alt="Watchlist" class="header__multiple-image" />
     <p class="header__multiple-text">Watchlist</p>
   </div>
   <div class="header__multiple" (click)="navigateToAccountPage()">
-    <img [src]="userIcon" alt="user" class="header__multiple-image">
-    <p class="header__multiple-text">{{userName}}</p>
+    <img [src]="userIcon" alt="user" class="header__multiple-image" />
+    <p class="header__multiple-text">{{ userName }}</p>
   </div>
 </div>

@@ -18,14 +18,13 @@ export class AuthGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): boolean | UrlTree {
     if (this.auth.isLoggedIn()) {
       return true;
     }
-    return this.router.createUrlTree(
-      ['/auth'],
-      { queryParams: { returnUrl: state.url } }
-    );
+    return this.router.createUrlTree(['/auth'], {
+      queryParams: { returnUrl: state.url },
+    });
   }
 }

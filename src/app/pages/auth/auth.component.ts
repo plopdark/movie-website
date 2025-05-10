@@ -1,22 +1,21 @@
-import {
-  Component,
-  inject,
-  OnInit
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
-  FormGroup, NonNullableFormBuilder,
-  ReactiveFormsModule
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import {AuthService} from '../../shared/services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { Icons } from '../../utils/enums/icons.enum';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
+  styleUrl: './auth.component.scss',
 })
 export class AuthComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
@@ -25,10 +24,14 @@ export class AuthComponent implements OnInit {
 
   private router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  public inputType: string = 'password';
+
+  public icon: string = Icons.OpenedEye;
+
+  public isPasswordShown: boolean = false;
 
   public authForm!: FormGroup<{
-    email: FormControl<string>;
+    username: FormControl<string>;
     password: FormControl<string>;
   }>;
 
@@ -38,21 +41,31 @@ export class AuthComponent implements OnInit {
 
   public initializeForm() {
     this.authForm = this.fb.group({
-      email: '',
-      password: ''
+      username: '',
+      password: '',
     });
   }
 
   public onSubmit() {
-    const { email, password } = this.authForm.value;
-    this.auth.logIn(email!, password!).subscribe({
+    const { username, password } = this.authForm.value;
+    this.auth.logIn(username!, password!).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigate(['']);
       },
-      error: err => {
-        console.error('Login failed', err);
-      }
+      error: () => {
+        alert('Login is failed');
+      },
     });
+  }
+
+  public showPassword(): void {
+    this.isPasswordShown = !this.isPasswordShown;
+    if (this.isPasswordShown) {
+      this.inputType = 'text';
+      this.icon = Icons.ClosedEye;
+    } else {
+      this.inputType = 'password';
+      this.icon = Icons.OpenedEye;
+    }
   }
 }
