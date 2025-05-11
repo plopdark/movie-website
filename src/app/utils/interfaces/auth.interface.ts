@@ -13,7 +13,14 @@ export interface SessionResponse {
 }
 
 export interface user {
-  avatar: any;
+  avatar: {
+    gravatar: {
+      hash: string;
+    };
+    tmdb: {
+      avatar_path: string;
+    };
+  };
   id: number;
   include_adult: boolean;
   iso_639_1: string;

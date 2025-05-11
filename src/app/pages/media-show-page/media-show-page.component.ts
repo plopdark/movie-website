@@ -12,7 +12,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../shared/services/data.service';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { forkJoin, map, of } from 'rxjs';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Icons } from '../../utils/enums/icons.enum';
@@ -50,8 +50,6 @@ export class MediaShowPageComponent implements OnInit {
 
   public similarMedia?: Media[];
 
-  public similarStarIcon: string = '';
-
   public rateText: string = 'Rate';
 
   public mediaImages: MediaImage[] = [];
@@ -69,6 +67,10 @@ export class MediaShowPageComponent implements OnInit {
   public isRatingModalOpen: boolean = false;
 
   public selectedRating: number = 0;
+
+  public similarRatingModalOpenId: number | null = null;
+
+  public similarRatings = new Map<number, number>();
 
   private session: string = localStorage.getItem('session_id')!;
 
@@ -202,6 +204,39 @@ export class MediaShowPageComponent implements OnInit {
     }
   }
 
+  public toggleRatingForSimilar(item: Media): void {
+    if (this.similarRatingModalOpenId === item.id) {
+      this.closeRatingForSimilar();
+    } else {
+      this.similarRatingModalOpenId = item.id;
+      this.dataService
+        .getAccountStates(this.mediaType, item.id, this.session)
+        .subscribe((state) => {
+          const value = state.rated && true ? state.rated.value : 0;
+          this.similarRatings.set(item.id, value);
+        });
+    }
+  }
+
+  public closeRatingForSimilar(): void {
+    this.similarRatingModalOpenId = null;
+  }
+
+  public selectSimilarRating(itemId: number, value: number): void {
+    this.similarRatings.set(itemId, value);
+  }
+
+  public submitRatingForSimilar(item: Media): void {
+    const rating = this.similarRatings.get(item.id) || 0;
+    if (rating > 0) {
+      this.dataService
+        .postMediaRating(this.mediaType, item.id, this.session!, rating)
+        .subscribe(() => {
+          this.closeRatingForSimilar();
+        });
+    }
+  }
+
   private initializeEverything(): void {
     this.loadTrailer();
     this.loadCast();
@@ -230,7 +265,7 @@ export class MediaShowPageComponent implements OnInit {
     this.dataService
       .getAccountStates(this.mediaType, this.media.id, this.session)
       .subscribe((state) => {
-        if (state.rated && typeof state.rated.value === 'number') {
+        if (state.rated) {
           this.selectedRating = state.rated.value;
           this.rateText = state.rated.value.toString();
           this.starButton = this.filledStarButton;
@@ -329,14 +364,33 @@ export class MediaShowPageComponent implements OnInit {
   private loadSimilar(): void {
     this.dataService
       .getSimilarMedia(this.mediaType, this.media.id)
-      .subscribe((res) => {
-        this.similarMedia = res.results.slice(0, 8);
+      .pipe(
+        switchMap((res) => {
+          this.similarMedia = res.results.slice(0, 8);
+
+          const ratingCalls = this.similarMedia.map((item) =>
+            this.dataService
+              .getAccountStates(this.mediaType, item.id, this.session)
+              .pipe(
+                map((state) => ({
+                  id: item.id,
+                  value: state.rated && true ? state.rated.value : 0,
+                })),
+              ),
+          );
+
+          return forkJoin(ratingCalls);
+        }),
+      )
+      .subscribe((ratingsArr) => {
+        ratingsArr.forEach(({ id, value }) => {
+          this.similarRatings.set(id, value);
+        });
 
         this.dataService
           .getWatchList(this.accountId, this.session)
           .subscribe((listResp) => {
             const watchedIds = new Set(listResp.results.map((m) => m.id));
-
             this.similarMedia!.forEach((m) => {
               this.watchlistMap.set(m.id, watchedIds.has(m.id));
             });

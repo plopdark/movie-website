@@ -1,0 +1,132 @@
+.account {
+  max-width: 1360px;
+  margin: 0 auto;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-not {
+      font-size: 1.5rem;
+      color: #555;
+      text-transform: uppercase;
+    }
+  }
+
+  &__info-username {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  &__watchlist,
+  &__rated {
+    margin-top: 2rem;
+
+    &-top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    &-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        color: #c3c3c3;
+        transition-duration: 0.3s;
+      }
+    }
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    &-items {
+      display: flex;
+      gap: 1rem;
+    }
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: #151515;
+      padding: 12px;
+      border-radius: 12px;
+      width: 150px;
+
+      &--image {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      &--title {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        cursor: pointer;
+
+        &:hover {
+          color: #c3c3c3;
+          transition-duration: 0.3s;
+        }
+      }
+
+      &--rate {
+        margin-top: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        &-icon {
+          width: 16px;
+          height: 16px;
+        }
+
+        &-text {
+          font-size: 0.875rem;
+          color: #555;
+        }
+      }
+
+      &--rates {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.account__watchlist-item--rates {
+  margin-top: 0.25rem;
+}

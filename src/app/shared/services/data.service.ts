@@ -9,6 +9,7 @@ import {
   MediaResp,
   MovieDetails,
   MultiSearchResp,
+  RatedMediaResp,
   ReleaseDatesResp,
   ReviewResp,
   TvContentRatingResp,
@@ -94,7 +95,7 @@ export class DataService {
     });
   }
 
-  private watchlistParams(accountId: number, sessionId: string) {
+  private postParams(sessionId: string) {
     return new HttpParams()
       .set('api_key', this.apiKey)
       .set('session_id', sessionId);
@@ -118,7 +119,7 @@ export class DataService {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         }),
-        params: this.watchlistParams(accountId, sessionId),
+        params: this.postParams(sessionId),
       },
     );
   }
@@ -127,7 +128,7 @@ export class DataService {
     accountId: number,
     sessionId: string,
   ): Observable<MediaResp> {
-    const params = this.watchlistParams(accountId, sessionId)
+    const params = this.postParams(sessionId)
       .set('language', 'en-US')
       .set('sort_by', 'created_at.asc')
       .set('page', '1');
@@ -263,10 +264,6 @@ export class DataService {
   ): Observable<{ status_code: number; status_message: string }> {
     const url = `${this.baseUrl}/${media}/${id}/rating`;
 
-    const params = new HttpParams()
-      .set('api_key', this.apiKey)
-      .set('session_id', sessionId);
-
     const body = { value: rating };
 
     const headers = this.headers.set(
@@ -277,7 +274,7 @@ export class DataService {
     return this.http.post<{ status_code: number; status_message: string }>(
       url,
       body,
-      { headers, params },
+      { headers, params: this.postParams(sessionId) },
     );
   }
 
@@ -286,12 +283,19 @@ export class DataService {
     id: number,
     sessionId: string,
   ): Observable<AccountStates> {
-    const params = new HttpParams()
-      .set('api_key', this.apiKey)
-      .set('session_id', sessionId);
     return this.http.get<AccountStates>(
       `${this.baseUrl}/${media}/${id}/account_states`,
-      { headers: this.headers, params },
+      { headers: this.headers, params: this.postParams(sessionId) },
+    );
+  }
+
+  public getAccountRatedMedia(
+    mediaType: 'movies' | 'tv',
+    id: number,
+  ): Observable<RatedMediaResp> {
+    return this.http.get<RatedMediaResp>(
+      `${this.baseUrl}/account/${id}/rated/${mediaType}`,
+      { headers: this.headers, params: this.defaultParams },
     );
   }
 }

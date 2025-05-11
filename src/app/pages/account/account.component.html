@@ -1,1 +1,152 @@
-<p>account works!</p>
+<app-header></app-header>
+@if (user) {
+  <div class="account">
+    <div class="account__info">
+      <div class="account__avatar">
+        @if (user.avatar.tmdb.avatar_path) {
+          <img
+            [src]="
+              'https://image.tmdb.org/t/p/w500' + user.avatar.tmdb.avatar_path
+            "
+            alt="avatar"
+            class="account__avatar-image"
+          />
+        } @else {
+          <p class="account__avatar-not">
+            {{ user.username.slice(0, 1).toUpperCase() }}
+          </p>
+        }
+      </div>
+      <p class="account__info-username">{{ user.username }}</p>
+    </div>
+    @if (watchList.length > 0) {
+      <div class="account__watchlist">
+        <div class="account__watchlist-top">
+          <h2 class="account__watchlist-title">Watchlist</h2>
+          <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
+        </div>
+        <div class="account__watchlist-items">
+          @for (media of watchList; track media) {
+            <div class="account__watchlist-item">
+              <img
+                [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path"
+                alt="poster"
+                class="account__watchlist-item--image"
+                (click)="onMediaClick(media)"
+              />
+              <p
+                class="account__watchlist-item--title"
+                (click)="onMediaClick(media)"
+              >
+                {{ media.title ? media.title : media.name }}
+              </p>
+              <div class="account__watchlist-item--rates">
+                <img
+                  [src]="filledStar"
+                  alt="star"
+                  class="account__watchlist-item--icon"
+                />
+                <p class="account__watchlist-item--text">
+                  {{ media.vote_average.toString().slice(0, 3) }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    @if (ratedMovies.length > 0) {
+      <div class="account__rated">
+        <div class="account__rated-top">
+          <h2 class="account__rated-title">Rated movies</h2>
+          <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
+        </div>
+        <div class="account__rated-items">
+          @for (movie of ratedMovies; track movie) {
+            <div class="account__rated-item">
+              <img
+                [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                alt="poster"
+                class="account__rated-item--image"
+                (click)="onMediaClick(movie)"
+              />
+              <p
+                class="account__rated-item--title"
+                (click)="onMediaClick(movie)"
+              >
+                {{ movie.title }}
+              </p>
+              <div class="account__rated-item--rate">
+                <div class="account__rated-item--rates">
+                  <img
+                    [src]="filledStar"
+                    alt="star"
+                    class="account__rated-item--icon"
+                  />
+                  <p class="account__watchlist-item--text">
+                    {{ movie.vote_average.toString().slice(0, 3) }}
+                  </p>
+                </div>
+                <div class="account__rated-item--rates">
+                  <img
+                    [src]="blueStar"
+                    alt="star"
+                    class="account__rated-item--icon"
+                  />
+                  <p class="account__watchlist-item--text">
+                    {{ movie.rating }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    @if (ratedTvs.length > 0) {
+      <div class="account__rated">
+        <div class="account__rated-top">
+          <h2 class="account__rated-title">Rated tv series</h2>
+          <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
+        </div>
+        <div class="account__rated-items">
+          @for (tv of ratedTvs; track tv) {
+            <div class="account__rated-item">
+              <img
+                [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path"
+                alt="poster"
+                class="account__rated-item--image"
+                (click)="onMediaClick(tv)"
+              />
+              <p class="account__rated-item--title" (click)="onMediaClick(tv)">
+                {{ tv.name }}
+              </p>
+              <div class="account__rated-item--rate">
+                <div class="account__rated-item--rates">
+                  <img
+                    [src]="filledStar"
+                    alt="star"
+                    class="account__rated-item--icon"
+                  />
+                  <p class="account__watchlist-item--text">
+                    {{ tv.vote_average.toString().slice(0, 3) }}
+                  </p>
+                </div>
+                <div class="account__rated-item--rates">
+                  <img
+                    [src]="blueStar"
+                    alt="star"
+                    class="account__rated-item--icon"
+                  />
+                  <p class="account__watchlist-item--text">
+                    {{ tv.rating }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

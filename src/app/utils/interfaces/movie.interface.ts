@@ -246,3 +246,14 @@ export interface AccountStates {
   watchlist: boolean;
   rated: false | { value: number };
 }
+
+export interface RatedMedia extends Media {
+  rating: number;
+}
+
+export interface RatedMediaResp extends RatedMedia {
+  page: number;
+  results: RatedMedia[];
+  total_pages: number;
+  total_results: number;
+}

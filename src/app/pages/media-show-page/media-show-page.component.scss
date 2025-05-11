@@ -69,7 +69,6 @@
 
       &-in {
         background-color: #f5c518;
-        color: rgba(163,163,163, 0.05);
       }
 
       &-not {
@@ -179,7 +178,7 @@
 
       &--poster {
         width: 100%;
-        height: auto;
+        height: 190px;
         object-fit: cover;
         cursor: pointer;
       }
@@ -210,15 +209,16 @@
           display: flex;
           align-items: center;
           gap: 0.25rem;
+          cursor: pointer;
 
-          & .media__similar-item--star {
+          &--star {
             width: 1rem;
             height: 1rem;
           }
+        }
 
-          & .media__similar-item--rates-text {
-            font-size: 0.9rem;
-          }
+        &-text {
+          font-size: 0.9rem;
         }
       }
     }
@@ -382,16 +382,16 @@
         align-items: center;
         margin-bottom: 8px;
 
-        .media__reviews-item--name {
-          font-size: 14px;
-          font-weight: 600;
-          color: #c3c3c3;
-        }
-
         span {
           font-size: 12px;
           color: #797979;
         }
+      }
+
+      &--name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #c3c3c3;
       }
 
       &--content {
@@ -425,13 +425,13 @@
 .info-title {
   color: #797979;
   font-weight: 600;
-  font-size: 18px
+  font-size: 18px;
 }
 
 .rating-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -488,8 +488,9 @@
         background: #f5c518;
         color: #000;
       }
+
       &:last-child {
-        background: rgba(163,163,163,0.2);
+        background: rgba(163, 163, 163, 0.2);
         color: #c3c3c3;
       }
 

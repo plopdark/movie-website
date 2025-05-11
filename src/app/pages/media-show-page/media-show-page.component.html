@@ -13,7 +13,7 @@
       <div class="media__header-right">
         <button class="media__header-rate" (click)="toggleRating()">
           <img [src]="starButton" alt="rate" />
-          <p>{{rateText}}</p>
+          <p>{{ rateText }}</p>
         </button>
         <div class="media__header-rating">
           <img [src]="filledStarButton" alt="rate" />
@@ -34,31 +34,32 @@
           {{ isInWatchlistMain ? "In watchlist" : "Add to watchlist" }}
         </button>
       </div>
-      <div
-        class="rating-modal-backdrop"
-        *ngIf="isRatingModalOpen"
-        (click)="closeRating()"
-      >
-        <div class="rating-modal" (click)="$event.stopPropagation()">
-          <h3>Rate the {{this.mediaType}}</h3>
-          <div class="rating-stars">
-            <ng-container *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]">
-        <span
-          class="star"
-          [class.filled]="star <= selectedRating"
-          (click)="selectRating(star)"
-        >★</span
-        >
-            </ng-container>
-          </div>
-          <div class="rating-buttons">
-            <button (click)="submitRating()" [disabled]="selectedRating===0">
-              Submit
-            </button>
-            <button (click)="closeRating()">Cancel</button>
+      @if (isRatingModalOpen) {
+        <div class="rating-modal-backdrop" (click)="closeRating()">
+          <div class="rating-modal" (click)="$event.stopPropagation()">
+            <h3>Rate the {{ this.mediaType }}</h3>
+            <div class="rating-stars">
+              @for (star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track star) {
+                <span
+                  class="star"
+                  [class.filled]="star <= selectedRating"
+                  (click)="selectRating(star)"
+                  >★</span
+                >
+              }
+            </div>
+            <div class="rating-buttons">
+              <button
+                (click)="submitRating()"
+                [disabled]="selectedRating === 0"
+              >
+                Submit
+              </button>
+              <button (click)="closeRating()">Cancel</button>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
     <div class="media__top">
       @if (media.poster_path) {
@@ -172,14 +173,62 @@
                     {{ similar.vote_average.toString().slice(0, 3) }}
                   </p>
                 </div>
-                <div class="media__similar-item--rates-item">
+                <div
+                  class="media__similar-item--rates-item"
+                  (click)="toggleRatingForSimilar(similar)"
+                >
                   <img
-                    [src]="similarStarIcon"
+                    [src]="
+                      (similarRatings.get(similar.id) ?? 0) > 0
+                        ? filledStarButton
+                        : emptyStarButton
+                    "
                     alt="star"
                     class="media__similar-item--star"
                   />
-                  <p class="media__similar-item--rates-text">Rate</p>
+                  <p class="media__similar-item--rates-text">
+                    {{ similarRatings.get(similar.id) }}
+                  </p>
                 </div>
+                @if (similarRatingModalOpenId === similar.id) {
+                  <div
+                    class="rating-modal-backdrop"
+                    (click)="closeRatingForSimilar()"
+                  >
+                    <div
+                      class="rating-modal"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <h3>Rate the {{ mediaType }}</h3>
+                      <div class="rating-stars">
+                        @for (
+                          star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                          track star
+                        ) {
+                          <span
+                            class="star"
+                            [class.filled]="
+                              star <= similarRatings.get(similar.id)! || 0
+                            "
+                            (click)="selectSimilarRating(similar.id, star)"
+                            >★</span
+                          >
+                        }
+                      </div>
+                      <div class="rating-buttons">
+                        <button
+                          (click)="submitRatingForSimilar(similar)"
+                          [disabled]="!(similarRatings.get(similar.id)! > 0)"
+                        >
+                          Submit
+                        </button>
+                        <button (click)="closeRatingForSimilar()">
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           }
@@ -188,16 +237,23 @@
       <div class="media__reviews">
         <p class="media__reviews-title info-title">Reviews</p>
         <div class="media__reviews-items">
-          @for(review of mediaReviews; track review) {
+          @for (review of mediaReviews; track review) {
             <div class="media__reviews-item">
-              <img [src]="'https://image.tmdb.org/t/p/w500'+review.author_details.avatar_path" alt="avatar" class="media__reviews-item--image">
+              <img
+                [src]="
+                  'https://image.tmdb.org/t/p/w500' +
+                  review.author_details.avatar_path
+                "
+                alt="avatar"
+                class="media__reviews-item--image"
+              />
               <div class="media__reviews-item--info">
                 <div class="media__reviews-item--top">
-                  <p class="media__reviews-item--name">{{review.author}}</p>
-                  <span>{{review.created_at.slice(0,10)}}</span>
+                  <p class="media__reviews-item--name">{{ review.author }}</p>
+                  <span>{{ review.created_at.slice(0, 10) }}</span>
                 </div>
                 <p class="media__reviews-item--content">
-                  {{review.content}}
+                  {{ review.content }}
                 </p>
               </div>
             </div>

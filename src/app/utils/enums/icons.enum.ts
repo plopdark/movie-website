@@ -11,4 +11,6 @@ export enum Icons {
   BookmarkYellow = '././icons/bookmark-yellow.svg',
   OpenedEye = '././icons/opened-eye.svg',
   ClosedEye = '././icons/closed-eye.svg',
+  ArrowLeft = '././icons/arrow-left.svg',
+  BlueStar = '././icons/blue-star.svg',
 }
