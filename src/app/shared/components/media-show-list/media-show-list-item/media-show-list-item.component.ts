@@ -10,7 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Icons } from '../../../../utils/enums/icons.enum';
-import { Media } from '../../../../utils/interfaces/movie.interface';
+import { Media } from '../../../../utils/interfaces/media.interface';
 import { DataService } from '../../../services/data.service';
 import { MediaType } from '../../../../utils/types/types';
 import { RoutingEnum } from '../../../../utils/enums/routing.enum';

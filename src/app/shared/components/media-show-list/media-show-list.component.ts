@@ -5,7 +5,7 @@ import {
   OnChanges,
   Output,
 } from '@angular/core';
-import { Media } from '../../../utils/interfaces/movie.interface';
+import { Media } from '../../../utils/interfaces/media.interface';
 import { MediaShowListItemComponent } from './media-show-list-item/media-show-list-item.component';
 import { Icons } from '../../../utils/enums/icons.enum';
 import { NgForOf } from '@angular/common';

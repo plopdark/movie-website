@@ -34,7 +34,7 @@ export interface Genre {
 
 export interface MultiSearchResp {
   page: number;
-  results: Media[];
+  results: MultiResult[];
   total_pages: number;
   total_results: number;
 }
@@ -257,3 +257,34 @@ export interface RatedMediaResp extends RatedMedia {
   total_pages: number;
   total_results: number;
 }
+
+export interface Person {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string;
+  deathday?: string;
+  gender: number;
+  homepage?: string;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string;
+  popularity: number;
+  profile_path: string;
+}
+
+export interface MovieResult extends Media {
+  media_type: 'movie';
+}
+
+export interface TvResult extends Media {
+  media_type: 'tv';
+}
+
+export interface PersonResult extends Person {
+  media_type: 'person';
+}
+
+export type MultiResult = MovieResult | TvResult | PersonResult;

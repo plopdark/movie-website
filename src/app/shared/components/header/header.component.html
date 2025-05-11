@@ -20,8 +20,28 @@
     <img [src]="magnifier" alt="Search" class="header__input-image" />
   </div>
   <ul *ngIf="searchResults.length" class="header__search-dropdown">
-    <li *ngFor="let item of searchResults" (click)="onClickMedia(item)">
-      {{ item.name || item.title }}
+    <li *ngFor="let item of searchResults" (click)="onClickItem(item)">
+      <div class="header__search-dropdown--item">
+        @if (item.media_type === "movie" || item.media_type === "tv") {
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path"
+            alt="poster"
+            class="header__search-dropdown--image"
+          />
+          <p class="header__search-dropdown--title">
+            {{ item.name || item.title }}
+          </p>
+        } @else if (item.media_type === "person") {
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + item.profile_path"
+            alt="poster"
+            class="header__search-dropdown--image"
+          />
+          <p class="header__search-dropdown--title">
+            {{ item.name }}
+          </p>
+        }
+      </div>
     </li>
   </ul>
   <div class="header__multiple">

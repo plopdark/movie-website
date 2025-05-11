@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
 import { AuthService } from '../../shared/services/auth.service';
-import { Media, RatedMedia } from '../../utils/interfaces/movie.interface';
+import { Media, RatedMedia } from '../../utils/interfaces/media.interface';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { user } from '../../utils/interfaces/auth.interface';
 import { Icons } from '../../utils/enums/icons.enum';

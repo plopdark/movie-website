@@ -8,7 +8,7 @@ import {
   ReviewInfo,
   TvContentRating,
   TvContentRatingResp,
-} from '../../utils/interfaces/movie.interface';
+} from '../../utils/interfaces/media.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../shared/services/data.service';
 import { switchMap } from 'rxjs/operators';

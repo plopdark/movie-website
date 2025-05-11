@@ -13,7 +13,7 @@ import {
   ReleaseDatesResp,
   TvContentRating,
   TvContentRatingResp,
-} from '../../../../utils/interfaces/movie.interface';
+} from '../../../../utils/interfaces/media.interface';
 import { DataService } from '../../../services/data.service';
 import { MediaType } from '../../../../utils/types/types';
 import { RoutingEnum } from '../../../../utils/enums/routing.enum';

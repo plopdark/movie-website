@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { Media } from '../../utils/interfaces/movie.interface';
+import { Media } from '../../utils/interfaces/media.interface';
 import { DataService } from '../../shared/services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { RoutingEnum } from '../../utils/enums/routing.enum';

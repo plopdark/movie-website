@@ -14,7 +14,7 @@ import {
   ReviewResp,
   TvContentRatingResp,
   VideoResp,
-} from '../../utils/interfaces/movie.interface';
+} from '../../utils/interfaces/media.interface';
 import { MediaType } from '../../utils/types/types';
 
 @Injectable({

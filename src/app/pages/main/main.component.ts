@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { DataService } from '../../shared/services/data.service';
-import { Media } from '../../utils/interfaces/movie.interface';
+import { Media } from '../../utils/interfaces/media.interface';
 import { MediaShowListComponent } from '../../shared/components/media-show-list/media-show-list.component';
 
 @Component({

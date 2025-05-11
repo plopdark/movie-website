@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { Icons } from '../../../utils/enums/icons.enum';
 import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -6,16 +12,19 @@ import { RoutingEnum } from '../../../utils/enums/routing.enum';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import {
-  Media,
+  MovieResult,
+  MultiResult,
   MultiSearchResp,
-} from '../../../utils/interfaces/movie.interface';
+  PersonResult,
+  TvResult,
+} from '../../../utils/interfaces/media.interface';
 import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 import { MediaType } from '../../../utils/types/types';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgOptimizedImage, RouterLink, NgForOf, NgIf],
+  imports: [NgOptimizedImage, RouterLink, NgIf, NgForOf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -26,6 +35,8 @@ export class HeaderComponent implements OnInit {
 
   private dataService = inject(DataService);
 
+  private elRef = inject(ElementRef<HTMLElement>);
+
   public userName: string = '';
 
   public searchQuery: string = '';
@@ -33,8 +44,6 @@ export class HeaderComponent implements OnInit {
   public searchResults: MultiSearchResp['results'] = [];
 
   private search$ = new Subject<string>();
-
-  private mediaType?: MediaType;
 
   public readonly logo = Icons.Logo;
 
@@ -58,11 +67,16 @@ export class HeaderComponent implements OnInit {
           this.searchResults = res.results;
         });
       });
+  }
 
-    if (this.searchResults.map((el) => el.title)) {
-      this.mediaType = 'movie';
-    } else {
-      this.mediaType = 'tv';
+  @HostListener('window:click', ['$event'])
+  public clickOutside(event: MouseEvent): void {
+    const clickedInside = this.elRef.nativeElement.contains(
+      event.target as Node,
+    );
+
+    if (!clickedInside) {
+      this.clearSearch();
     }
   }
 
@@ -77,13 +91,27 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  public onClickMedia(item: Media): void {
-    const type: MediaType = item.title ? 'movie' : 'tv';
+  public onClickMedia(item: MovieResult | TvResult): void {
+    const type: MediaType = item.media_type;
     this.router.navigate([RoutingEnum.MediaShow, type, item.id], {
       state: { media: item },
     });
-    this.searchQuery = '';
-    this.searchResults = [];
+    this.clearSearch();
+  }
+
+  public onClickPerson(item: PersonResult): void {
+    this.router.navigate([RoutingEnum.MediaShow, item.id], {
+      state: { media: item },
+    });
+    this.clearSearch();
+  }
+
+  public onClickItem(item: MultiResult): void {
+    if (item.media_type === 'movie' || item.media_type === 'tv') {
+      this.onClickMedia(item);
+    } else {
+      this.onClickPerson(item);
+    }
   }
 
   public navigateToHomePage(): void {
@@ -100,5 +128,10 @@ export class HeaderComponent implements OnInit {
 
   public navigateToTvSeriesPage(): void {
     this.router.navigate([RoutingEnum.TvSeries]);
+  }
+
+  private clearSearch() {
+    this.searchQuery = '';
+    this.searchResults = [];
   }
 }
