@@ -2,6 +2,11 @@
   max-width: 1360px;
   margin: 0 auto;
 
+  &__top {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__info {
     display: flex;
     align-items: center;
@@ -35,6 +40,17 @@
   &__info-username {
     font-size: 1.25rem;
     font-weight: 600;
+  }
+
+  &__logout {
+    background: #ff2929;
+    border: none;
+    border-radius: 10px;
+    height: 42px;
+    padding: 0 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #fff;
   }
 
   &__watchlist,

@@ -19,6 +19,7 @@ import { Icons } from '../../utils/enums/icons.enum';
 import { MediaType } from '../../utils/types/types';
 import { RoutingEnum } from '../../utils/enums/routing.enum';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-media-show-page',
@@ -29,6 +30,8 @@ import { NgClass, NgForOf, NgIf } from '@angular/common';
 })
 export class MediaShowPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
+
+  private auth = inject(AuthService);
 
   private router = inject(Router);
 
@@ -62,7 +65,7 @@ export class MediaShowPageComponent implements OnInit {
 
   public watchlistMap = new Map<number, boolean>();
 
-  private accountId: number = 21967768;
+  private accountId: number = 0;
 
   public isRatingModalOpen: boolean = false;
 
@@ -94,6 +97,7 @@ export class MediaShowPageComponent implements OnInit {
 
   ngOnInit() {
     const nav = this.router.getCurrentNavigation();
+    this.accountId = this.auth.accountId;
 
     if (nav?.extras.state?.['media']) {
       this.media = nav.extras.state['media'] as Media;
@@ -130,7 +134,7 @@ export class MediaShowPageComponent implements OnInit {
     const next = !currently;
 
     this.dataService
-      .toggleWatchlist(21967768, this.mediaType, id, next, this.session!)
+      .toggleWatchlist(this.accountId, this.mediaType, id, next, this.session!)
       .subscribe((res) => {
         if (res.success) {
           this.watchlistMap.set(id, next);

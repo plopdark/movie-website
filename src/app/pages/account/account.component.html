@@ -1,23 +1,26 @@
 <app-header></app-header>
 @if (user) {
   <div class="account">
-    <div class="account__info">
-      <div class="account__avatar">
-        @if (user.avatar.tmdb.avatar_path) {
-          <img
-            [src]="
+    <div class="account__top">
+      <div class="account__info">
+        <div class="account__avatar">
+          @if (user.avatar.tmdb.avatar_path) {
+            <img
+              [src]="
               'https://image.tmdb.org/t/p/w500' + user.avatar.tmdb.avatar_path
             "
-            alt="avatar"
-            class="account__avatar-image"
-          />
-        } @else {
-          <p class="account__avatar-not">
-            {{ user.username.slice(0, 1).toUpperCase() }}
-          </p>
-        }
+              alt="avatar"
+              class="account__avatar-image"
+            />
+          } @else {
+            <p class="account__avatar-not">
+              {{ user.username.slice(0, 1).toUpperCase() }}
+            </p>
+          }
+        </div>
+        <p class="account__info-username">{{ user.username }}</p>
       </div>
-      <p class="account__info-username">{{ user.username }}</p>
+      <button class="account__logout" (click)="onLogOut()">Log out</button>
     </div>
     @if (watchList.length > 0) {
       <div class="account__watchlist">

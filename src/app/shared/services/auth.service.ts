@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import {
   SessionResponse,
   TokenResponse,
@@ -23,6 +23,8 @@ export class AuthService {
   private userSubject = new BehaviorSubject<user | null>(null);
 
   public user$ = this.userSubject.asObservable();
+
+  public accountId: number = 0;
 
   public get headers() {
     return new HttpHeaders({
@@ -57,24 +59,21 @@ export class AuthService {
 
   public logIn(username: string, password: string): Observable<void> {
     return this.getRequestToken().pipe(
-      switchMap((tokenResponse) =>
-        this.validateWithLogin(
-          username,
-          password,
-          tokenResponse.request_token,
-        ).pipe(
-          switchMap(() => this.createSession(tokenResponse.request_token)),
+      switchMap((tokenRes) =>
+        this.validateWithLogin(username, password, tokenRes.request_token).pipe(
+          map(() => tokenRes.request_token),
         ),
       ),
-      tap((sessionResponse) => {
-        localStorage.setItem('session_id', sessionResponse.session_id);
+      switchMap((request_token) =>
+        this.createSession(request_token).pipe(
+          map((sessRes) => sessRes.session_id),
+        ),
+      ),
+      tap((session_id) => {
+        localStorage.setItem('session_id', session_id);
       }),
-      switchMap(() => {
-        return new Observable<void>((observer) => {
-          observer.next();
-          observer.complete();
-        });
-      }),
+      switchMap((session_id) => this.fetchAccountDetails(session_id)),
+      map(() => void 0),
     );
   }
 
@@ -109,5 +108,18 @@ export class AuthService {
       this.fetchUser();
     }
     return this.user$ as Observable<user>;
+  }
+
+  public fetchAccountDetails(
+    sessionId: string,
+  ): Observable<{ id: number; username: string }> {
+    return this.http
+      .get<{ id: number; username: string }>(`${this.baseUrl}/account`, {
+        headers: this.headers,
+        params: new HttpParams()
+          .set('api_key', this.apiKey)
+          .set('session_id', sessionId),
+      })
+      .pipe(tap((account) => (this.accountId = account.id)));
   }
 }

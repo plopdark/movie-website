@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit {
 
   public watchList: Media[] = [];
 
-  private id: number = 21967768;
+  private accountId: number = 0;
 
   public session = localStorage.getItem('session_id');
 
@@ -43,6 +43,8 @@ export class AccountComponent implements OnInit {
 
   public ngOnInit() {
     this.getUser();
+    this.accountId = this.auth.accountId;
+    console.log(this.accountId);
     this.getWatchlist();
     this.getRatedMedia();
   }
@@ -54,6 +56,10 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  public onLogOut(): void {
+    this.auth.logOut();
+  }
+
   private getUser(): void {
     this.auth.getUser().subscribe((res) => {
       this.user = res;
@@ -61,18 +67,20 @@ export class AccountComponent implements OnInit {
   }
 
   private getWatchlist(): void {
-    this.data.getWatchList(this.id, this.session!).subscribe((res) => {
+    this.data.getWatchList(this.accountId, this.session!).subscribe((res) => {
       this.watchList = res.results;
       console.log(this.watchList);
     });
   }
 
   private getRatedMedia(): void {
-    this.data.getAccountRatedMedia('movies', this.id).subscribe((res) => {
-      this.ratedMovies = res.results;
-    });
+    this.data
+      .getAccountRatedMedia('movies', this.accountId)
+      .subscribe((res) => {
+        this.ratedMovies = res.results;
+      });
 
-    this.data.getAccountRatedMedia('tv', this.id).subscribe((res) => {
+    this.data.getAccountRatedMedia('tv', this.accountId).subscribe((res) => {
       this.ratedTvs = res.results;
     });
   }
