@@ -1,0 +1,22 @@
+<div class="media__images">
+  <p class="media__images-title">Images</p>
+  <div class="media__images-items">
+    @for (img of images; track img) {
+      <img
+        [src]="baseSmall + img.file_path"
+        (click)="onThumbClick(img.file_path)"
+        alt="image"
+      />
+    }
+  </div>
+  @if (selectedSrc) {
+    <div class="lightbox" (click)="onBackdropClick()">
+      <img
+        class="lightbox__img"
+        [src]="baseLarge + selectedSrc"
+        alt="preview"
+        (click)="$event.stopPropagation()"
+      />
+    </div>
+  }
+</div>

@@ -1,0 +1,100 @@
+<div class="media__similar">
+  <p class="media__similar-title info-title">Similar</p>
+  <div class="media__similar-items">
+    @for (similar of similars; track similar.id) {
+      <div class="media__similar-item">
+        <div
+          class="media__similar-item--watchlist"
+          (click)="onToggleWatch(similar)"
+        >
+          <img [src]="getBookmarkIcon(similar.id)" alt="Watchlist" />
+        </div>
+        <div (click)="onMediaClick(similar)">
+          <img
+            [src]="
+                    'https://image.tmdb.org/t/p/w500' + similar.poster_path
+                  "
+            alt="poster"
+            class="media__similar-item--poster"
+          />
+        </div>
+        <div
+          class="media__similar-item--title"
+          (click)="onMediaClick(similar)"
+        >
+          <p>
+            {{ similar.title }}
+          </p>
+        </div>
+        <div class="media__similar-item--rates">
+          <div class="media__similar-item--rates-item">
+            <img
+              [src]="filledStarButton"
+              alt="star"
+              class="media__similar-item--star"
+            />
+            <p class="media__similar-item--rates-text">
+              {{ similar.vote_average.toString().slice(0, 3) }}
+            </p>
+          </div>
+          <div
+            class="media__similar-item--rates-item"
+            (click)="onToggleRating(similar)"
+          >
+            <img
+              [src]="
+                      (similarRatings.get(similar.id) ?? 0) > 0
+                        ? filledStarButton
+                        : emptyStarButton
+                    "
+              alt="star"
+              class="media__similar-item--star"
+            />
+            <p class="media__similar-item--rates-text">
+              {{ similarRatings.get(similar.id) }}
+            </p>
+          </div>
+          @if (modalOpenId === similar.id) {
+            <div
+              class="rating-modal-backdrop"
+              (click)="closeRatingForSimilar()"
+            >
+              <div
+                class="rating-modal"
+                (click)="$event.stopPropagation()"
+              >
+                <h3>Rate the {{ mediaType }}</h3>
+                <div class="rating-stars">
+                  @for (
+                      star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                    track star
+                    ) {
+                    <span
+                      class="star"
+                      [class.filled]="
+                              star <= similarRatings.get(similar.id)! || 0
+                            "
+                      (click)="selectRating(similar.id, star)"
+                    >★</span
+                    >
+                  }
+                </div>
+                <div class="rating-buttons">
+                  <button
+                    (click)="onSubmitRating(similar)"
+                    [disabled]="!(similarRatings.get(similar.id)! > 0)"
+                  >
+                    Submit
+                  </button>
+                  <button (click)="closeRatingForSimilar()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

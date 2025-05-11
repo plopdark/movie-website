@@ -20,11 +20,22 @@ import { MediaType } from '../../utils/types/types';
 import { RoutingEnum } from '../../utils/enums/routing.enum';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../../shared/services/auth.service';
+import { MediaShowPageCreditsComponent } from './media-show-page-credits/media-show-page-credits.component';
+import { MediaShowPageImagesComponent } from './media-show-page-images/media-show-page-images.component';
+import { MediaShowPageSimilarComponent } from './media-show-page-similar/media-show-page-similar.component';
 
 @Component({
   selector: 'app-media-show-page',
   standalone: true,
-  imports: [HeaderComponent, NgClass, NgIf, NgForOf],
+  imports: [
+    HeaderComponent,
+    NgClass,
+    NgIf,
+    NgForOf,
+    MediaShowPageCreditsComponent,
+    MediaShowPageImagesComponent,
+    MediaShowPageSimilarComponent,
+  ],
   templateUrl: './media-show-page.component.html',
   styleUrl: './media-show-page.component.scss',
 })

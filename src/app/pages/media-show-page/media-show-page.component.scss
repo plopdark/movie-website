@@ -1,3 +1,4 @@
+
 .media {
   max-width: 1360px;
   margin: 0 auto;
@@ -33,18 +34,6 @@
         font-size: 18px;
         color: #c3c3c3;
       }
-    }
-
-    &-rating {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      height: 42px;
-      background-color: rgba(163, 163, 163, 0.05);
-      border-radius: 10px;
-      padding: 0 10px;
-      font-size: 18px;
 
       span {
         font-size: 14px;
@@ -91,12 +80,6 @@
   }
 
   &__poster {
-    width: 340px;
-    height: 500px;
-    border: 1px solid gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 10;
 
     &-image {
@@ -134,203 +117,9 @@
       padding: 0 18px;
     }
 
-    &-items {
-      display: flex;
-      gap: 20px;
-    }
-
     &-item {
       flex: 1;
       display: block;
-    }
-  }
-
-  &__similar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    &-items {
-      display: flex;
-      gap: 20px;
-    }
-
-    &-item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #151515;
-      width: 150px;
-      padding: 12px;
-      border-radius: 12px;
-
-      &--watchlist {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        cursor: pointer;
-
-        img {
-          width: 85%;
-        }
-      }
-
-      &--poster {
-        width: 100%;
-        height: 190px;
-        object-fit: cover;
-        cursor: pointer;
-      }
-
-      &--title {
-        color: #797979;
-        margin-top: 14px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        text-align: left;
-        width: 100%;
-        cursor: pointer;
-
-        &:hover {
-          color: #c3c3c3;
-          transition-duration: 0.3s;
-        }
-      }
-
-      &--rates {
-        margin-top: 14px;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-
-        &-item {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          cursor: pointer;
-
-          &--star {
-            width: 1rem;
-            height: 1rem;
-          }
-        }
-
-        &-text {
-          font-size: 0.9rem;
-        }
-      }
-    }
-  }
-
-  &__images {
-    max-width: 1360px;
-
-    &-title {
-      margin-bottom: 10px;
-    }
-
-    &-items {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding-bottom: 8px;
-
-      &::-webkit-scrollbar {
-        height: 10px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border-radius: 3px;
-        background: rgba(120, 120, 120, 0.5);
-      }
-
-      img {
-        flex: 0 0 auto;
-        width: 250px;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-        transition: transform 0.2s;
-        cursor: pointer;
-
-        &:hover {
-          transform: scale(1.05);
-        }
-      }
-    }
-  }
-
-  &__credits {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    &-image {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-
-    &-items {
-      display: flex;
-      gap: 16px;
-      scroll-behavior: smooth;
-      overflow-x: auto;
-      padding-bottom: 8px;
-
-      &::-webkit-scrollbar {
-        height: 10px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: rgba(120, 120, 120, 0.5);
-        border-radius: 3px;
-      }
-    }
-
-    &-item {
-      flex: 0 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 120px;
-      background: #151515;
-      border-radius: 8px;
-      padding: 8px;
-      transition: transform 0.2s;
-      cursor: pointer;
-
-      &:hover {
-        transform: translateY(-4px);
-      }
-    }
-
-    &-text {
-      text-align: center;
-
-      span {
-        font-size: 12px;
-        color: #797979;
-        display: block;
-      }
-    }
-
-    &-name {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #c3c3c3;
-    }
-
-    &-character {
-      font-size: 12px;
-      color: #c3c3c3;
-      margin-top: 2px;
     }
   }
 
@@ -400,24 +189,6 @@
         overflow: hidden;
       }
     }
-  }
-}
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-
-  &__img {
-    max-width: 80vw;
-    max-height: 80vh;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-    cursor: auto;
   }
 }
 

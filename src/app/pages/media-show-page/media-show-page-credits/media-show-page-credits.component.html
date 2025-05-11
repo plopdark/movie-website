@@ -1,0 +1,19 @@
+<div class="media__credits">
+  <p class="media__credits-title info-title">Actors</p>
+  <div class="media__credits-items">
+    @for (actor of credits; track actor) {
+      <div class="media__credits-item" (click)="selectActor(actor.id)">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path"
+          alt=""
+          class="media__credits-image"
+        />
+        <div class="media__credits-text">
+          <p class="media__credits-name">{{ actor.name }}</p>
+          <span>as</span>
+          <p class="media__credits-character">{{ actor.character }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

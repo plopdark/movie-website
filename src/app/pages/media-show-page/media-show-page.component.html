@@ -15,7 +15,7 @@
           <img [src]="starButton" alt="rate" />
           <p>{{ rateText }}</p>
         </button>
-        <div class="media__header-rating">
+        <div class="media__header-rate">
           <img [src]="filledStarButton" alt="rate" />
           <p>
             {{ media.vote_average!.toString().slice(0, 3) }}/10
@@ -93,147 +93,31 @@
           <p>{{ media.overview }}</p>
         </div>
       </div>
-      <div class="media__credits">
-        <p class="media__credits-title info-title">Actors</p>
-        <div class="media__credits-items">
-          @for (actor of cast?.cast; track actor) {
-            <div class="media__credits-item" (click)="onPersonClick(actor.id)">
-              <img
-                [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path"
-                alt=""
-                class="media__credits-image"
-              />
-              <div class="media__credits-text">
-                <p class="media__credits-name">{{ actor.name }}</p>
-                <span>as</span>
-                <p class="media__credits-character">{{ actor.character }}</p>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-      <div class="media__images">
-        <p class="media__images-title info-title">Images</p>
-        <div class="media__images-items">
-          @for (image of mediaImages; track image) {
-            <img
-              [src]="'https://image.tmdb.org/t/p/w500' + image.file_path"
-              alt="image"
-              (click)="openLightbox(image.file_path)"
-            />
-          }
-        </div>
-        @if (lightboxSrc) {
-          <div class="lightbox" (click)="closeLightbox()">
-            <img
-              class="lightbox__img"
-              [src]="'https://image.tmdb.org/t/p/original' + lightboxSrc"
-              alt="preview"
-              (click)="$event.stopPropagation()"
-            />
-          </div>
-        }
-      </div>
-      <div class="media__similar">
-        <p class="media__similar-title info-title">Similar</p>
-        <div class="media__similar-items">
-          @for (similar of similarMedia; track similar.id) {
-            <div class="media__similar-item">
-              <div
-                class="media__similar-item--watchlist"
-                (click)="toggleWatchListForSimilar(similar)"
-              >
-                <img [src]="getBookmarkIcon(similar.id)" alt="Watchlist" />
-              </div>
-              <div (click)="onSimilarMediaClick(similar)">
-                <img
-                  [src]="
-                    'https://image.tmdb.org/t/p/w500' + similar.poster_path
-                  "
-                  alt="poster"
-                  class="media__similar-item--poster"
-                />
-              </div>
-              <div
-                class="media__similar-item--title"
-                (click)="onSimilarMediaClick(similar)"
-              >
-                <p>
-                  {{ similar.title }}
-                </p>
-              </div>
-              <div class="media__similar-item--rates">
-                <div class="media__similar-item--rates-item">
-                  <img
-                    [src]="filledStarButton"
-                    alt="star"
-                    class="media__similar-item--star"
-                  />
-                  <p class="media__similar-item--rates-text">
-                    {{ similar.vote_average.toString().slice(0, 3) }}
-                  </p>
-                </div>
-                <div
-                  class="media__similar-item--rates-item"
-                  (click)="toggleRatingForSimilar(similar)"
-                >
-                  <img
-                    [src]="
-                      (similarRatings.get(similar.id) ?? 0) > 0
-                        ? filledStarButton
-                        : emptyStarButton
-                    "
-                    alt="star"
-                    class="media__similar-item--star"
-                  />
-                  <p class="media__similar-item--rates-text">
-                    {{ similarRatings.get(similar.id) }}
-                  </p>
-                </div>
-                @if (similarRatingModalOpenId === similar.id) {
-                  <div
-                    class="rating-modal-backdrop"
-                    (click)="closeRatingForSimilar()"
-                  >
-                    <div
-                      class="rating-modal"
-                      (click)="$event.stopPropagation()"
-                    >
-                      <h3>Rate the {{ mediaType }}</h3>
-                      <div class="rating-stars">
-                        @for (
-                          star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-                          track star
-                        ) {
-                          <span
-                            class="star"
-                            [class.filled]="
-                              star <= similarRatings.get(similar.id)! || 0
-                            "
-                            (click)="selectSimilarRating(similar.id, star)"
-                            >★</span
-                          >
-                        }
-                      </div>
-                      <div class="rating-buttons">
-                        <button
-                          (click)="submitRatingForSimilar(similar)"
-                          [disabled]="!(similarRatings.get(similar.id)! > 0)"
-                        >
-                          Submit
-                        </button>
-                        <button (click)="closeRatingForSimilar()">
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
-          }
-        </div>
-      </div>
+      <app-media-show-page-credits
+        [credits]="cast?.cast || []"
+        (actorClick)="onPersonClick($event)"
+      ></app-media-show-page-credits>
+      <app-media-show-page-images
+        [images]="mediaImages"
+        [selectedSrc]="lightboxSrc"
+        (imageClick)="openLightbox($event)"
+        (close)="closeLightbox()"
+      ></app-media-show-page-images>
+      <app-media-show-page-similar
+        [similars]="similarMedia!"
+        [filledStarButton]="filledStarButton"
+        [emptyStarButton]="emptyStarButton"
+        [similarRatings]="similarRatings"
+        [emptyBookmark]="notInWatchlistIcon"
+        [filledBookmark]="inWatchListIcon"
+        [mediaType]="mediaType"
+        [watchlistMap]="watchlistMap"
+        [initialModalId]="similarRatingModalOpenId"
+        (mediaClick)="onSimilarMediaClick($event)"
+        (toggleWatch)="toggleWatchListForSimilar($event)"
+        (toggleRating)="toggleRatingForSimilar($event)"
+        (ratingSubmit)="submitRatingForSimilar($event.item)"
+      ></app-media-show-page-similar>
       <div class="media__reviews">
         <p class="media__reviews-title info-title">Reviews</p>
         <div class="media__reviews-items">
