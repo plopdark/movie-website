@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="persons">
+  <p class="persons__title">Top Rated Persons</p>
+  <div class="persons__items">
+    @for (person of persons; track persons; let i = $index) {
+      <div class="persons__item" (click)="onPersonClick(person.id)">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path"
+          alt="image"
+          class="persons__item-image"
+        />
+        <div class="persons__item-info">
+          <p class="persons__item-title">{{ i + 1 }}. {{ person.name }}</p>
+          <span>known for</span>
+          <div class="persons__item-media">
+            @for (media of person.known_for; track media) {
+              <div class="persons__item" (click)="onMediaClick(media)">
+                <img
+                  [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path"
+                  alt="poster"
+                  class="persons__item-image"
+                />
+                <p class="persons__item-title">
+                  {{ media.title || media.name }}
+                </p>
+                <div class="persons__item-rate">
+                  <img
+                    [src]="filledStar"
+                    alt="star"
+                    class="persons__item-icon"
+                  />
+                  <p class="persons__item-text">
+                    {{ media.vote_average.toString().slice(0, 3) }}
+                  </p>
+                  <span>({{media.vote_count}})</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

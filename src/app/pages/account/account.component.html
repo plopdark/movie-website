@@ -24,7 +24,7 @@
     </div>
     @if (watchList.length > 0) {
       <div class="account__watchlist">
-        <div class="account__watchlist-top">
+        <div class="account__watchlist-top" (click)="navigateToWatchlistPage()">
           <h2 class="account__watchlist-title">Watchlist</h2>
           <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
         </div>
@@ -60,7 +60,7 @@
     }
     @if (ratedMovies.length > 0) {
       <div class="account__rated">
-        <div class="account__rated-top">
+        <div class="account__rated-top" (click)="navigateToRatedMovie()">
           <h2 class="account__rated-title">Rated movies</h2>
           <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
         </div>
@@ -108,7 +108,7 @@
     }
     @if (ratedTvs.length > 0) {
       <div class="account__rated">
-        <div class="account__rated-top">
+        <div class="account__rated-top" (click)="navigateToRatedTv()">
           <h2 class="account__rated-title">Rated tv series</h2>
           <img [src]="arrowLeft" alt="arrow" class="account__watchlist-icon" />
         </div>

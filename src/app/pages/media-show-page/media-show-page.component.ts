@@ -89,9 +89,7 @@ export class MediaShowPageComponent implements OnInit {
 
   public readonly inWatchListIcon = Icons.BookmarkYellow;
 
-  public readonly listButtonRight = Icons.ListButtonRight;
-
-  public readonly listButtonLeft = Icons.ListButtonLeft;
+  public readonly blueStar = Icons.BlueStar;
 
   public starButton = this.emptyStarButton;
 
@@ -203,7 +201,7 @@ export class MediaShowPageComponent implements OnInit {
           this.selectedRating,
         )
         .subscribe(() => this.closeRating());
-      this.starButton = this.filledStarButton;
+      this.starButton = this.blueStar;
       this.rateText = this.selectedRating.toString();
     }
   }
@@ -241,6 +239,10 @@ export class MediaShowPageComponent implements OnInit {
     }
   }
 
+  public onPersonClick(personId: number): void {
+    this.router.navigate([RoutingEnum.Person, personId]);
+  }
+
   private initializeEverything(): void {
     this.loadTrailer();
     this.loadCast();
@@ -272,7 +274,7 @@ export class MediaShowPageComponent implements OnInit {
         if (state.rated) {
           this.selectedRating = state.rated.value;
           this.rateText = state.rated.value.toString();
-          this.starButton = this.filledStarButton;
+          this.starButton = this.blueStar;
         }
       });
   }
@@ -298,6 +300,7 @@ export class MediaShowPageComponent implements OnInit {
       .getMediaCredits(this.mediaType, this.media.id)
       .subscribe((res) => {
         this.cast = res;
+        console.log(this.cast.cast);
       });
   }
 

@@ -12,4 +12,6 @@ import { MediaColumnListItemComponent } from './media-column-list-item/media-col
 })
 export class MediaColumnListComponent {
   @Input() public medias: Media[] = [];
+
+  @Input() public isWatchlistIconShow?: boolean;
 }

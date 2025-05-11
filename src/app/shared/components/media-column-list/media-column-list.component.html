@@ -1,5 +1,9 @@
 <div class="items">
-  @for (media of medias; track media) {
-    <app-media-column-list-item [media]="media"></app-media-column-list-item>
+  @for (media of medias; track media; let i = $index) {
+    <app-media-column-list-item
+      [media]="media"
+      [index]="i + 1"
+      [isWatchlistIconShow]="isWatchlistIconShow"
+    ></app-media-column-list-item>
   }
 </div>

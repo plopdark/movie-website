@@ -4,4 +4,8 @@ export enum RoutingEnum {
   TvSeries = 'tvSeries',
   Auth = 'auth',
   MediaShow = 'mediaShow',
+  Person = 'person',
+  Persons = 'persons',
+  Watchlist = 'watchlist',
+  Rated = 'rated',
 }

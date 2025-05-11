@@ -1,0 +1,75 @@
+.person {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #f0f0f0;
+  font-family: sans-serif;
+
+  &__top {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  &__image {
+    flex-shrink: 0;
+    width: 200px;
+    height: 300px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__info-name {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+
+    span {
+      font-weight: normal;
+      color: #ccc;
+      font-size: 24px;
+    }
+  }
+
+  &__info-years {
+    display: flex;
+    gap: 24px;
+    font-size: 16px;
+    color: #bbb;
+
+    p {
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &__info-biography {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #ddd;
+  }
+
+  &__bottom {
+    margin-top: 48px;
+
+    &-title {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+  }
+}

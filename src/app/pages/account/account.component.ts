@@ -58,6 +58,19 @@ export class AccountComponent implements OnInit {
 
   public onLogOut(): void {
     this.auth.logOut();
+    this.router.navigate([RoutingEnum.Auth]);
+  }
+
+  public navigateToWatchlistPage(): void {
+    this.router.navigate([RoutingEnum.Watchlist]);
+  }
+
+  public navigateToRatedMovie(): void {
+    this.router.navigate([RoutingEnum.Rated, 'movie']);
+  }
+
+  public navigateToRatedTv(): void {
+    this.router.navigate([RoutingEnum.Rated, 'tv']);
   }
 
   private getUser(): void {

@@ -29,6 +29,10 @@ import { Router } from '@angular/router';
 export class MediaColumnListItemComponent implements OnChanges {
   @Input() public media?: Media;
 
+  @Input() public index?: number;
+
+  @Input() public isWatchlistIconShow?: boolean = true;
+
   private dataService = inject(DataService);
 
   private router = inject(Router);

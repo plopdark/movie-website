@@ -97,7 +97,7 @@
         <p class="media__credits-title info-title">Actors</p>
         <div class="media__credits-items">
           @for (actor of cast?.cast; track actor) {
-            <div class="media__credits-item">
+            <div class="media__credits-item" (click)="onPersonClick(actor.id)">
               <img
                 [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path"
                 alt=""

@@ -1,12 +1,11 @@
-.main {
+.rated {
+  max-width: 1360px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 0 auto;
-  max-width: 1360px;
 
   &__title {
-    margin-right: auto;
     font-size: 28px;
   }
 }

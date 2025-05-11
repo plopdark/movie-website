@@ -3,16 +3,21 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { forkJoin, map, Observable } from 'rxjs';
 import {
   AccountStates,
+  CreditItem,
   CreditsResp,
   GenresResp,
   MediaImagesList,
   MediaResp,
+  MovieCreditsResp,
   MovieDetails,
   MultiSearchResp,
+  Person,
+  PersonsResp,
   RatedMediaResp,
   ReleaseDatesResp,
   ReviewResp,
   TvContentRatingResp,
+  TvCreditsResp,
   VideoResp,
 } from '../../utils/interfaces/media.interface';
 import { MediaType } from '../../utils/types/types';
@@ -47,6 +52,13 @@ export class DataService {
       .set('language', 'en-US');
   }
 
+  private hundredParams(i: number): HttpParams {
+    return new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('language', 'en-US')
+      .set('page', (i + 1).toString());
+  }
+
   public getTopRatedMediaChanges(mediaType: MediaType): Observable<MediaResp> {
     const params = new HttpParams()
       .set('api_key', this.apiKey)
@@ -64,14 +76,9 @@ export class DataService {
     pagesToLoad: number = 5,
   ): Observable<MediaResp> {
     const requests = Array.from({ length: pagesToLoad }, (_, i) => {
-      const params = new HttpParams()
-        .set('api_key', this.apiKey)
-        .set('language', 'en-US')
-        .set('page', (i + 1).toString());
-
       return this.http.get<MediaResp>(
         `${this.baseUrl}/${mediaType}/top_rated`,
-        { headers: this.headers, params },
+        { headers: this.headers, params: this.hundredParams(i) },
       );
     });
 
@@ -296,6 +303,61 @@ export class DataService {
     return this.http.get<RatedMediaResp>(
       `${this.baseUrl}/account/${id}/rated/${mediaType}`,
       { headers: this.headers, params: this.defaultParams },
+    );
+  }
+
+  public getPopularPeople(pagesToLoad: number = 5): Observable<PersonsResp> {
+    const requests = Array.from({ length: pagesToLoad }, (_, i) => {
+      return this.http.get<PersonsResp>(`${this.baseUrl}/person/popular`, {
+        headers: this.headers,
+        params: this.hundredParams(i),
+      });
+    });
+
+    return forkJoin(requests).pipe(
+      map((responses) => {
+        const allResults = responses.flatMap((r) => r.results);
+
+        return {
+          page: 1,
+          results: allResults,
+          total_pages: responses[0].total_pages,
+          total_results: allResults.length,
+        } as PersonsResp;
+      }),
+    );
+  }
+
+  public getPersonDetails(id: number): Observable<Person> {
+    return this.http.get<Person>(`${this.baseUrl}/person/${id}`, {
+      headers: this.headers,
+      params: this.defaultParams,
+    });
+  }
+
+  public getPersonAllCredits(personId: number): Observable<CreditItem[]> {
+    const movie$ = this.http.get<MovieCreditsResp>(
+      `${this.baseUrl}/person/${personId}/movie_credits`,
+      { headers: this.headers, params: this.defaultParams },
+    );
+
+    const tv$ = this.http.get<TvCreditsResp>(
+      `${this.baseUrl}/person/${personId}/tv_credits`,
+      { headers: this.headers, params: this.defaultParams },
+    );
+
+    return forkJoin({ movie: movie$, tv: tv$ }).pipe(
+      map(({ movie, tv }) => {
+        const fromMovies: CreditItem[] = movie.cast.map((cast) => ({
+          ...cast,
+          media_type: 'movie',
+        }));
+        const fromTv: CreditItem[] = tv.cast.map((cast) => ({
+          ...cast,
+          media_type: 'tv',
+        }));
+        return [...fromMovies, ...fromTv];
+      }),
     );
   }
 }

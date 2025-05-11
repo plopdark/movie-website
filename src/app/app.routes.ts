@@ -6,6 +6,11 @@ import { MediaTopPageComponent } from './pages/media-top-page/media-top-page.com
 import { AuthComponent } from './pages/auth/auth.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { MediaShowPageComponent } from './pages/media-show-page/media-show-page.component';
+import { PersonPageComponent } from './pages/person-page/person-page.component';
+import { LoggedGuard } from './shared/guard/logged.guard';
+import { PersonsTopPageComponent } from './pages/persons-top-page/persons-top-page.component';
+import { WatchlistComponent } from './pages/watchlist/watchlist.component';
+import { RatedComponent } from './pages/rated/rated.component';
 
 export const routes: Routes = [
   {
@@ -14,7 +19,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     component: MainComponent,
   },
-  { path: RoutingEnum.Auth, component: AuthComponent },
+  {
+    path: RoutingEnum.Auth,
+    canActivate: [LoggedGuard],
+    component: AuthComponent,
+  },
   {
     path: RoutingEnum.User,
     canActivate: [AuthGuard],
@@ -34,5 +43,25 @@ export const routes: Routes = [
     path: `${RoutingEnum.MediaShow}/:type/:id`,
     canActivate: [AuthGuard],
     component: MediaShowPageComponent,
+  },
+  {
+    path: `${RoutingEnum.Person}/:id`,
+    canActivate: [AuthGuard],
+    component: PersonPageComponent,
+  },
+  {
+    path: `${RoutingEnum.Persons}`,
+    canActivate: [AuthGuard],
+    component: PersonsTopPageComponent,
+  },
+  {
+    path: `${RoutingEnum.Watchlist}`,
+    canActivate: [AuthGuard],
+    component: WatchlistComponent,
+  },
+  {
+    path: `${RoutingEnum.Rated}/:type`,
+    canActivate: [AuthGuard],
+    component: RatedComponent,
   },
 ];

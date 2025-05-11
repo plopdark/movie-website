@@ -58,7 +58,7 @@ export interface VideoResp {
 export interface Cast {
   adult: boolean;
   gender: number;
-  id: string;
+  id: number;
   known_for_department: string;
   name: string;
   original_name: string;
@@ -288,3 +288,36 @@ export interface PersonResult extends Person {
 }
 
 export type MultiResult = MovieResult | TvResult | PersonResult;
+
+export interface TopPersons {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for: Media[];
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+
+export interface PersonsResp {
+  page: number;
+  results: TopPersons[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface CreditItem extends Media {
+  media_type: 'movie' | 'tv';
+}
+
+export interface MovieCreditsResp {
+  id: number;
+  cast: Array<Omit<CreditItem, 'media_type' | 'name'>>;
+}
+
+export interface TvCreditsResp {
+  id: number;
+  cast: Array<Omit<CreditItem, 'media_type' | 'title'>>;
+}

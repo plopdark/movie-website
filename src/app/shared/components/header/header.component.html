@@ -8,7 +8,7 @@
   <div class="header__items">
     <div class="header__item" (click)="navigateToMoviesPage()">Movies</div>
     <div class="header__item" (click)="navigateToTvSeriesPage()">TV Shows</div>
-    <div class="header__item">Celebs</div>
+    <div class="header__item" (click)="navigateToPersonsPage()">Celebs</div>
   </div>
   <div class="header__input">
     <input
@@ -44,7 +44,7 @@
       </div>
     </li>
   </ul>
-  <div class="header__multiple">
+  <div class="header__multiple" (click)="navigateToWatchlistPage()">
     <img [src]="watchlist" alt="Watchlist" class="header__multiple-image" />
     <p class="header__multiple-text">Watchlist</p>
   </div>

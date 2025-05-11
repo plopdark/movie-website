@@ -130,6 +130,14 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([RoutingEnum.TvSeries]);
   }
 
+  public navigateToPersonsPage(): void {
+    this.router.navigate([RoutingEnum.Persons]);
+  }
+
+  public navigateToWatchlistPage(): void {
+    this.router.navigate([RoutingEnum.Watchlist]);
+  }
+
   private clearSearch() {
     this.searchQuery = '';
     this.searchResults = [];

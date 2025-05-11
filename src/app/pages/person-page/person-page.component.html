@@ -1,0 +1,38 @@
+<app-header></app-header>
+@if (person) {
+  <div class="person">
+    <div class="person__top">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path"
+        alt="avatar"
+        class="person__image"
+      />
+      <div class="person__info">
+        <p class="person__info-name">
+          {{ person.name }}
+          @if (person.birthday) {
+            <span>({{ personAge }})</span>
+          }
+        </p>
+        <div class="person__info-years">
+          @if (person.birthday) {
+            <p class="person__info-">
+              Born: {{ person.birthday }}
+              @if (person.place_of_birth) {
+                , {{ person.place_of_birth }}
+              }
+            </p>
+          }
+          @if (person.deathday) {
+            <p class="person__info-">Died: {{ person.deathday }}</p>
+          }
+        </div>
+        <p class="person__info-biography">{{ person.biography }}</p>
+      </div>
+    </div>
+    <div class="person__bottom">
+      <p class="person__bottom-title">Credits</p>
+      <app-media-column-list [medias]="credits!"></app-media-column-list>
+    </div>
+  </div>
+}
